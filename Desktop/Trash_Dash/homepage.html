@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the Eco World!</title>
+    <link rel="stylesheet" href="./public/css/mystyle.css">
+    <style>
+        /* Body Background */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to top, #a0e8af, #e0f7fa);
+            margin: 0;
+            padding: 0;
+            animation: backgroundScroll 20s infinite linear;
+        }
+
+        @keyframes backgroundScroll {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 0; }
+        }
+
+        header {
+            background-color: #385038;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+            font-family: 'Comic Sans MS', cursive;
+            animation: slideIn 1s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+
+        /* Cards Styling */
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 28%;
+            text-align: center;
+            transform: scale(1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-button {
+            background-color:#01573c;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            animation: bounce 1.5s infinite;
+            margin: 2rem auto;
+            display: block;
+        }
+
+        .cta-button:hover {
+            background-color: #09b17c;
+            transform: translateY(-5px);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background: #f7f7f7;
+            padding: 3rem 1rem;
+            text-align: center;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        footer {
+            background-color: #a7eba7;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            font-size: 1rem;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Step Into the Future of Waste Management!</h1>
+        <nav>
+            <ul>
+                <li><a href="games.html">Interactive Games</a></li>
+                <li><a href="quiz.html">Fun Quiz</a></li>
+                <li><a href="modules.html">Explore Lessons</a></li>
+                <li><a href="footprint-tracker.html">Track Your Waste Footprint</a></li>
+                <li><a href="leaderboard.html">Compete with Friends!</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Be a Waste Warrior! 🌍</h2>
+        <p>Ready to save the planet? Start your journey today by learning how to manage waste and reduce your environmental footprint. It's fun, easy, and impactful!</p>
+        
+        <!-- Card Container -->
+        <div class="card-container">
+            <div class="card">
+                <h3>🌟 Learn Cool Facts</h3>
+                <p>Discover amazing facts about recycling, composting, and how your daily actions can make a huge difference.</p>
+            </div>
+            <div class="card">
+                <h3>🎮 Play and Compete</h3>
+                <p>Challenge yourself with our interactive games and see how well you know your waste! Compete with friends and climb the leaderboard.</p>
+            </div>
+            <div class="card">
+                <h3>📈 Track Your Impact</h3>
+                <p>Use our tracker to measure how much waste you're reducing each week and become an eco-hero!</p>
+            </div>
+        </div>
+        
+        <button class="cta-button">Get Started Now!</button>
+    </section>
+
+    <!-- Testimonials Section with Cardview -->
+    <section class="testimonials">
+        <h2>What Students Are Saying</h2>
+        <div class="card-container">
+            <div class="card">
+                <p>“I never knew recycling could be so much fun! Now I’m teaching my family how to compost!” - <em>Alice, 5th Grade</em></p>
+            </div>
+            <div class="card">
+                <p>“This platform helped my class reduce our waste by 50% in just one month!” - <em>Mr. Smith, Science Teacher</em></p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Waste Warriors Initiative - Together for a Cleaner Future 🌱</p>
+    </footer>
+</body>
+</html>

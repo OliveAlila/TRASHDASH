@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Management Quiz</title>
+    <link rel="stylesheet" href="./public/css/mystyle.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        header {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 4px solid #388E3C;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .quiz-container {
+            margin: 2rem auto;
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .question {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .choices {
+            list-style: none;
+            padding: 0;
+        }
+
+        .choices li {
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .choices li:hover {
+            background-color: #f1f1f1;
+            transform: scale(1.02);
+        }
+
+        .feedback {
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        .feedback.correct {
+            color: green;
+        }
+
+        .feedback.incorrect {
+            color: red;
+        }
+
+        .score {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .submit-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Waste Management Quiz</h1>
+    </header>
+
+    <div class="quiz-container">
+        <div id="quiz-section">
+            <p class="question">What is the best way to dispose of plastic bottles?</p>
+            <ul class="choices">
+                <li data-answer="incorrect">Throw them in the trash</li>
+                <li data-answer="correct">Recycle them in the appropriate bin</li>
+                <li data-answer="incorrect">Burn them</li>
+                <li data-answer="incorrect">Bury them</li>
+            </ul>
+            <p id="feedback" class="feedback"></p>
+            <button class="submit-button" onclick="nextQuestion()">Next Question</button>
+        </div>
+        
+        <div id="score-section" style="display: none;">
+            <p class="score"></p>
+            <button class="submit-button" onclick="restartQuiz()">Retake Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: 'What is the best way to dispose of plastic bottles?',
+                choices: ['Throw them in the trash', 'Recycle them in the appropriate bin', 'Burn them', 'Bury them'],
+                correct: 1
+            },
+            {
+                question: 'Which of the following is compostable?',
+                choices: ['Plastic', 'Glass', 'Banana Peels', 'Metal'],
+                correct: 2
+            },
+            {
+                question: 'What happens to waste when it’s not managed properly?',
+                choices: ['It disappears', 'It causes pollution', 'It turns into compost', 'It becomes energy'],
+                correct: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const quizSection = document.getElementById('quiz-section');
+            const questionEl = quizSection.querySelector('.question');
+            const choicesEl = quizSection.querySelector('.choices');
+            const feedbackEl = document.getElementById('feedback');
+
+            // Reset feedback
+            feedbackEl.textContent = '';
+            feedbackEl.className = 'feedback';
+
+            // Load new question and choices
+            const currentQ = questions[currentQuestion];
+            questionEl.textContent = currentQ.question;
+            choicesEl.innerHTML = '';
+
+            currentQ.choices.forEach((choice, index) => {
+                const li = document.createElement('li');
+                li.textContent = choice;
+                li.onclick = () => checkAnswer(index, li);
+                choicesEl.appendChild(li);
+            });
+        }
+
+        function checkAnswer(selectedIndex, selectedElement) {
+            const correctIndex = questions[currentQuestion].correct;
+            const feedbackEl = document.getElementById('feedback');
+
+            if (selectedIndex === correctIndex) {
+                feedbackEl.textContent = 'Correct! Good job!';
+                feedbackEl.className = 'feedback correct';
+                score++;
+            } else {
+                feedbackEl.textContent = 'Oops! That\'s not right.';
+                feedbackEl.className = 'feedback incorrect';
+            }
+
+            // Disable further selections
+            const allChoices = document.querySelectorAll('.choices li');
+            allChoices.forEach(choice => choice.onclick = null);
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                showScore();
+            }
+        }
+
+        function showScore() {
+            const quizSection = document.getElementById('quiz-section');
+            const scoreSection = document.getElementById('score-section');
+            const scoreEl = scoreSection.querySelector('.score');
+
+            quizSection.style.display = 'none';
+            scoreSection.style.display = 'block';
+
+            // scoreEl.textContent = You scored ${score} out of ${questions.length}!;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+
+            const quizSection = document.getElementById('quiz-section');
+            const scoreSection = document.getElementById('score-section');
+
+            quizSection.style.display = 'block';
+            scoreSection.style.display = 'none';
+
+            loadQuestion();
+        }
+
+        window.onload = loadQuestion;
+    </script>
+
+</body>
+</html>

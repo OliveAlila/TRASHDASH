@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Sorting Game</title>
+    <style>
+        /* Body and Background */
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #d2ffde, #9ffca5);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1c8133;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: slideDown 1s ease-in-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+
+        /* Game Container */
+        .game-container {
+            text-align: center;
+            padding: 30px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .game-area {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .item {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 10px 20px;
+            margin: 15px;
+            cursor: grab;
+            user-select: none;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .item:active {
+            cursor: grabbing;
+            transform: scale(1.1);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Bin Styles */
+        .bins {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        .bin {
+            background-color: #e0f7fa;
+            border-radius: 10px;
+            padding: 40px;
+            width: 30%;
+            text-align: center;
+            font-size: 2rem;
+            transition: background-color 0.3s;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .bin:hover {
+            background-color: #b2ebf2;
+        }
+
+        /* Bin Hover Effects */
+        .bin-over {
+            background-color: #80deea;
+        }
+
+        /* Score Display */
+        .score {
+            font-size: 2rem;
+            margin-top: 30px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Reset Button */
+        #reset-game {
+            background-color: #61ff64;
+            color: white;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 30px;
+        }
+
+        #reset-game:hover {
+            background-color: #22ff64;
+        }
+
+        footer {
+            background-color: #61ff61;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 1.2rem;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Become a Waste Sorting Pro! 🌍</h1>
+    <nav>
+        <ul>
+            <li><a href="homepage.html">Home</a></li>
+            <li><a href="modules.html">Learning Modules</a></li>
+            <li><a href="footprint_tracker.html">Footprint Tracker</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="game-container">
+    <h2>Drag and Drop the Waste into the Right Bin!</h2>
+    <p>Can you sort all the items correctly? You’ll earn points for every correct answer! 🏅</p>
+
+    <div class="game-area">
+        <!-- Waste Items -->
+        <div class="item" draggable="true" data-type="recycle">Plastic Bottle</div>
+        <div class="item" draggable="true" data-type="compost">Apple Core</div>
+        <div class="item" draggable="true" data-type="recycle">Cardboard</div>
+        <div class="item" draggable="true" data-type="trash">Plastic Wrapper</div>
+        <div class="item" draggable="true" data-type="compost">Banana Peel</div>
+        <div class="item" draggable="true" data-type="trash">Old Shoes</div>
+        <div class="item" draggable="true" data-type="recycle">Aluminum Can</div>
+        <div class="item" draggable="true" data-type="trash">Broken Glass</div>
+        <div class="item" draggable="true" data-type="compost">Coffee Grounds</div>
+        <div class="item" draggable="true" data-type="recycle">Newspaper</div>
+    </div>
+
+    <div class="bins">
+        <!-- Bins -->
+        <div class="bin" data-type="recycle">♻ Recycle Bin</div>
+        <div class="bin" data-type="compost">🌱 Compost Bin</div>
+        <div class="bin" data-type="trash">🗑 Trash Bin</div>
+    </div>
+
+    <div class="score">
+        <h3>Your Score: <span id="score">0</span></h3>
+    </div>
+
+    <button id="reset-game">Reset Game</button>
+</section>
+
+<footer>
+    <p>&copy; 2024 Waste Warriors Initiative 🌱 - Learn, Play, and Save the Planet!</p>
+</footer>
+
+<script>
+    const items = document.querySelectorAll('.item');
+    const bins = document.querySelectorAll('.bin');
+    const scoreElement = document.getElementById('score');
+    let score = 0;
+
+    items.forEach(item => {
+        item.addEventListener('dragstart', dragStart);
+    });
+
+    bins.forEach(bin => {
+        bin.addEventListener('dragover', dragOver);
+        bin.addEventListener('drop', dragDrop);
+        bin.addEventListener('dragleave', dragLeave);
+    });
+
+    function dragStart(event) {
+        event.dataTransfer.setData('text/plain', event.target.dataset.type);
+        event.target.classList.add('dragging');
+    }
+
+    function dragOver(event) {
+        event.preventDefault();
+        event.target.classList.add('bin-over');
+    }
+
+    function dragDrop(event) {
+        const itemType = event.dataTransfer.getData('text/plain');
+        if (itemType === event.target.dataset.type) {
+            event.target.classList.remove('bin-over');
+            event.target.classList.add('correct');
+            score += 10;
+            scoreElement.textContent = score;
+        } else {
+            score -= 5;
+            scoreElement.textContent = score;
+        }
+        event.target.classList.remove('bin-over'); // Remove hover effect after drop
+    }
+
+    function dragLeave(event) {
+        event.target.classList.remove('bin-over');
+    }
+
+    document.getElementById('reset-game').addEventListener('click', () => {
+        score = 0;
+        scoreElement.textContent = score;
+        document.querySelectorAll('.correct').forEach(bin => bin.classList.remove('correct'));
+        // Optionally reset item positions (not implemented in this version)
+    });
+</script>
+
+</body>
+</html>

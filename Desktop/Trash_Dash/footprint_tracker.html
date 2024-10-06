@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Your Waste Footprint</title>
+    <link rel="stylesheet" href="./public/css/mystyle.css">
+    <style>
+        body {
+            font-family: cursive;
+            background-color: #f0f9f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #0d6010;
+            color: white;
+            padding: 1rem;
+            width: 100%;
+            text-align: center;
+            border-bottom: 4px solid #388E3C;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .tracker {
+            text-align: center;
+            margin: 2rem auto;
+            max-width: 600px;
+        }
+
+        .tracker h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        form:hover {
+            transform: scale(1.02);
+        }
+
+        label {
+            display: block;
+            margin: 1rem 0 0.5rem;
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .leaderboard {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .leaderboard table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .leaderboard th, .leaderboard td {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .leaderboard th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        footer {
+            background-color: #388E3C;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            font-size: 1rem;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Track Your Waste Footprint</h1>
+        <nav>
+            <ul>
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="games.html">Games</a></li>
+                <li><a href="modules.html">Learning Modules</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="tracker">
+        <h2>Enter Your Daily Waste</h2>
+        <form id="wasteForm">
+            <label for="plastic">Plastic (kg):</label>
+            <input type="number" id="plastic" name="plastic" step="0.1" min="0" placeholder="E.g., 0.5 kg" required><br>
+            <label for="organic">Organic (kg):</label>
+            <input type="number" id="organic" name="organic" step="0.1" min="0" placeholder="E.g., 1.2 kg" required><br>
+            <label for="paper">Paper (kg):</label>
+            <input type="number" id="paper" name="paper" step="0.1" min="0" placeholder="E.g., 0.3 kg" required><br>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <section class="leaderboard">
+        <h2>Wasteboard</h2>
+        <table id="leaderboardTable">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Waste Reduced (kg)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Scores will be dynamically inserted here -->
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Waste Management Learning Platform</p>
+    </footer>
+
+    <script>
+        const form = document.getElementById('wasteForm');
+        const leaderboardTable = document.getElementById('leaderboardTable').getElementsByTagName('tbody')[0];
+
+        let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+
+        function updateLeaderboard() {
+            leaderboardTable.innerHTML = ''; // Clear current leaderboard
+
+            leaderboard
+                .sort((a, b) => b.totalWaste - a.totalWaste) // Sort by total waste reduced
+                .forEach((entry, index) => {
+                    const row = leaderboardTable.insertRow();
+                    row.insertCell(0).textContent = index + 1; // Rank
+                    row.insertCell(1).textContent = entry.name; // Name
+                    row.insertCell(2).textContent = entry.totalWaste.toFixed(1) + ' kg'; // Total waste reduced
+                });
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const plastic = parseFloat(document.getElementById('plastic').value) || 0;
+            const organic = parseFloat(document.getElementById('organic').value) || 0;
+            const paper = parseFloat(document.getElementById('paper').value) || 0;
+
+            const dailyWaste = plastic + organic + paper;
+
+            // Prompt user for name (or auto-fetch in real implementation)
+            const userName = prompt("Enter your name for the leaderboard:") || 'Anonymous';
+
+            // Find if user exists in leaderboard
+            let userEntry = leaderboard.find(entry => entry.name === userName);
+
+            if (userEntry) {
+                userEntry.totalWaste += dailyWaste;
+            } else {
+                userEntry = { name: userName, totalWaste: dailyWaste };
+                leaderboard.push(userEntry);
+            }
+
+            // Store updated leaderboard
+            localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+
+            // Update leaderboard display
+            updateLeaderboard();
+
+            // Clear form after submission
+            form.reset();
+        });
+
+        // Initialize leaderboard on page load
+        updateLeaderboard();
+    </script>
+</body>
+</html>

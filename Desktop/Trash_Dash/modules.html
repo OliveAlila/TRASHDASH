@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Modules</title>
+    <!-- Adding Google Font for better typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <style>
+        /* Body and Background */
+        body {
+            font-family: cursive;
+            background: linear-gradient(to right, #a8e063, #f5f5f5);
+            margin: 0;
+            padding: 0;
+            color: #333;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Header Styling */
+        header {
+            background-color: #275828;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 1rem;
+            border-bottom: 5px solid #256428;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+
+        /* Modules Section */
+        .modules {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #388E3C;
+        }
+
+        .module-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Module Boxes */
+        .module {
+            background-color: #81c784;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+            text-align: left;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s ease;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .module:hover {
+            background-color: #66bb6a;
+            transform: translateY(-5px);
+        }
+
+        /* Hidden content revealed on click */
+        .module-info {
+            display: none;
+            background-color: #f1f8e9;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 10px;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .module-info p {
+            margin: 0;
+        }
+
+        .module-info strong {
+            color: #388E3C;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #388E3C;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            font-size: 1rem;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Waste Management Learning Modules</h1>
+        <nav>
+            <ul>
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="games.html">Games</a></li>
+                <li><a href="footprint-tracker.html">Footprint Tracker</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="modules">
+        <h2>Select a Module to Begin Learning</h2>
+        <div class="module-list">
+            <!-- Module 1 -->
+            <div class="module" onclick="toggleInfo('info1')">
+                Recycling Basics
+            </div>
+            <div id="info1" class="module-info">
+                <p>Learn the importance of recycling and how sorting materials like plastics, metals, and paper can reduce waste in landfills.</p>
+                <p><strong>Fun Fact:</strong> Recycling one ton of paper saves 17 trees!</p>
+            </div>
+
+            <!-- Module 2 -->
+            <div class="module" onclick="toggleInfo('info2')">
+                Composting at Home
+            </div>
+            <div id="info2" class="module-info">
+                <p>Discover how to turn your kitchen scraps into valuable compost for your garden, helping reduce methane emissions.</p>
+                <p><strong>Tip:</strong> Composting reduces the amount of food waste by up to 30% in landfills.</p>
+            </div>
+
+            <!-- Module 3 -->
+            <div class="module" onclick="toggleInfo('info3')">
+                The Life Cycle of Waste
+            </div>
+            <div id="info3" class="module-info">
+                <p>Follow the journey of waste from production to disposal, and understand how different types of waste impact our environment.</p>
+                <p><strong>Interesting Insight:</strong> The average American produces about 4.9 pounds of waste per day!</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Waste Management Learning Platform</p>
+    </footer>
+
+    <script>
+        function toggleInfo(infoId) {
+            const info = document.getElementById(infoId);
+            if (info.style.display === "block") {
+                info.style.display = "none";
+            } else {
+                info.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
